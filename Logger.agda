@@ -1,6 +1,5 @@
 module Logger where
 open import Data.Unit
-open import Data.Nat
 open import Data.String hiding (_++_)
 open import Data.List
 open import Data.Product
@@ -32,8 +31,8 @@ m >>= f with runLogger m
 _>>_ : {A B : Set} → Logger A → Logger B → Logger B
 x >> y = x >>= λ _ → y
 
-testBasic : (s₁ s₂ : String)(n : ℕ) →
-  runLogger ( write s₁ >> write s₂ >> return n ) ≡ n , (s₁ ∷ s₂ ∷ [])
+testBasic : {A : Set}(a : A)(s₁ s₂ : String) →
+  runLogger ( write s₁ >> write s₂ >> return a ) ≡ a , (s₁ ∷ s₂ ∷ [])
 testBasic _ _ _ = refl
 
 testWrite : (s : String) →
